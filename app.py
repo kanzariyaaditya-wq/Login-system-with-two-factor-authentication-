@@ -18,6 +18,7 @@ def get_db():
 
 def create_tables():
     conn = get_db()
+
     conn.execute("""
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -27,6 +28,7 @@ def create_tables():
             password TEXT NOT NULL
         )
     """)
+
     conn.execute("""
         CREATE TABLE IF NOT EXISTS otps (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -37,11 +39,11 @@ def create_tables():
             FOREIGN KEY(user_id) REFERENCES users(id)
         )
     """)
+
     conn.commit()
     conn.close()
 
 
-# IMPORTANT: create tables as soon as app starts on Render too
 create_tables()
 
 
@@ -103,9 +105,9 @@ def login():
             session["demo_otp"] = otp
 
             return redirect(url_for("verify_otp"))
-        else:
-            conn.close()
-            flash("Invalid username/email or password.", "danger")
+
+        conn.close()
+        flash("Invalid username/email or password.", "danger")
 
     return render_template("login.html")
 
@@ -122,7 +124,7 @@ def verify_otp():
 
         conn = get_db()
         otp_record = conn.execute("""
-            SELECT * FROM otps 
+            SELECT * FROM otps
             WHERE user_id = ? AND otp = ? AND is_used = 0
             ORDER BY id DESC LIMIT 1
         """, (user_id, entered_otp)).fetchone()
@@ -131,22 +133,49 @@ def verify_otp():
             expiry_time = datetime.fromisoformat(otp_record["expiry_time"])
 
             if datetime.now() <= expiry_time:
-                conn.execute("UPDATE otps SET is_used = 1 WHERE id = ?", (otp_record["id"],))
+                conn.execute(
+                    "UPDATE otps SET is_used = 1 WHERE id = ?",
+                    (otp_record["id"],)
+                )
                 conn.commit()
                 conn.close()
 
                 session.pop("temp_user_id", None)
+                session.pop("demo_otp", None)
                 session["user_id"] = user_id
+
                 return redirect(url_for("dashboard"))
-            else:
-                conn.close()
-                flash("OTP expired. Please login again.", "danger")
-                return redirect(url_for("login"))
-        else:
+
             conn.close()
-            flash("Invalid OTP.", "danger")
+            flash("OTP expired. Please login again.", "danger")
+            return redirect(url_for("login"))
+
+        conn.close()
+        flash("Invalid OTP.", "danger")
 
     return render_template("verify_otp.html", demo_otp=session.get("demo_otp"))
+
+
+@app.route("/resend-otp")
+def resend_otp():
+    if "temp_user_id" not in session:
+        return redirect(url_for("login"))
+
+    user_id = session["temp_user_id"]
+    otp = str(random.randint(100000, 999999))
+    expiry_time = datetime.now() + timedelta(minutes=5)
+
+    conn = get_db()
+    conn.execute(
+        "INSERT INTO otps (user_id, otp, expiry_time, is_used) VALUES (?, ?, ?, 0)",
+        (user_id, otp, expiry_time.isoformat())
+    )
+    conn.commit()
+    conn.close()
+
+    session["demo_otp"] = otp
+    flash("New OTP generated successfully.", "success")
+    return redirect(url_for("verify_otp"))
 
 
 @app.route("/dashboard")
@@ -155,7 +184,10 @@ def dashboard():
         return redirect(url_for("login"))
 
     conn = get_db()
-    user = conn.execute("SELECT * FROM users WHERE id = ?", (session["user_id"],)).fetchone()
+    user = conn.execute(
+        "SELECT * FROM users WHERE id = ?",
+        (session["user_id"],)
+    ).fetchone()
     conn.close()
 
     return render_template("dashboard.html", user=user)
