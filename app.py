@@ -11,8 +11,10 @@ DB_NAME = "database.db"
 
 
 def get_db():
-    conn = sqlite3.connect(DB_NAME)
+    conn = sqlite3.connect(DB_NAME, timeout=30, check_same_thread=False)
     conn.row_factory = sqlite3.Row
+    conn.execute("PRAGMA journal_mode=WAL;")
+    conn.execute("PRAGMA busy_timeout=30000;")
     return conn
 
 
@@ -70,10 +72,17 @@ def register():
             )
             conn.commit()
             conn.close()
+
             flash("Registration successful. Please login.", "success")
             return redirect(url_for("login"))
+
         except sqlite3.IntegrityError:
             flash("Email or username already exists.", "danger")
+            return redirect(url_for("register"))
+
+        except sqlite3.OperationalError:
+            flash("Database is busy. Please try again.", "danger")
+            return redirect(url_for("register"))
 
     return render_template("register.html")
 
@@ -108,6 +117,7 @@ def login():
 
         conn.close()
         flash("Invalid username/email or password.", "danger")
+        return redirect(url_for("login"))
 
     return render_template("login.html")
 
@@ -152,6 +162,7 @@ def verify_otp():
 
         conn.close()
         flash("Invalid OTP.", "danger")
+        return redirect(url_for("verify_otp"))
 
     return render_template("verify_otp.html", demo_otp=session.get("demo_otp"))
 
