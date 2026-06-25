@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Dashboard</h2>
+<p>Welcome, <b>{{ user["name"] }}</b></p>
+<p>Your login is successful using Two-Factor Authentication.</p>
+<a href="{{ url_for('logout') }}">Logout</a>
+{% endblock %}
