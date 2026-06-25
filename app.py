@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-app.secret_key = "change-this-secret-key
+app.secret_key = "change-this-secret-key"
 
 DB_NAME = "database.db"
 
