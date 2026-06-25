@@ -41,6 +41,10 @@ def create_tables():
     conn.close()
 
 
+# IMPORTANT: create tables as soon as app starts on Render too
+create_tables()
+
+
 @app.route("/")
 def home():
     return redirect(url_for("login"))
@@ -96,11 +100,7 @@ def login():
             conn.close()
 
             session["temp_user_id"] = user["id"]
-
-            # Demo purpose: OTP shown on next page.
-            # In real project, send OTP to email instead.
             session["demo_otp"] = otp
-            print("Your OTP is:", otp)
 
             return redirect(url_for("verify_otp"))
         else:
@@ -136,9 +136,7 @@ def verify_otp():
                 conn.close()
 
                 session.pop("temp_user_id", None)
-                session.pop("demo_otp", None)
                 session["user_id"] = user_id
-
                 return redirect(url_for("dashboard"))
             else:
                 conn.close()
@@ -171,5 +169,4 @@ def logout():
 
 
 if __name__ == "__main__":
-    create_tables()
     app.run(debug=True)
