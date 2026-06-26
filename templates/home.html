@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>2FA Login System</h2>
+
+<p style="font-size:16px; line-height:1.7;">
+    This is a cyber security project that provides a secure login system using
+    <b>Two-Factor Authentication</b>. It protects user accounts using password
+    verification and OTP verification.
+</p>
+
+<div style="margin-top:22px; padding:18px; border-radius:18px; background:rgba(2,6,23,0.55); border:1px solid rgba(56,189,248,0.3);">
+    <h3 style="color:#7dd3fc; margin-top:0;">Project Features</h3>
+    <ul style="color:#cbd5e1; line-height:1.8;">
+        <li>User Registration</li>
+        <li>Secure Login System</li>
+        <li>Password Hashing</li>
+        <li>OTP Verification</li>
+        <li>5 Minute OTP Timer</li>
+        <li>Resend OTP Option</li>
+        <li>Secure Dashboard</li>
+    </ul>
+</div>
+
+<div style="margin-top:18px; padding:18px; border-radius:18px; background:rgba(2,6,23,0.55); border:1px solid rgba(56,189,248,0.3);">
+    <h3 style="color:#7dd3fc; margin-top:0;">Technologies Used</h3>
+    <p style="line-height:1.7;">
+        Python, Flask, SQLite, HTML, CSS, JavaScript
+    </p>
+</div>
+
+<div style="margin-top:18px; padding:18px; border-radius:18px; background:rgba(2,6,23,0.55); border:1px solid rgba(56,189,248,0.3);">
+    <h3 style="color:#7dd3fc; margin-top:0;">How It Works</h3>
+    <ul style="color:#cbd5e1; line-height:1.8;">
+        <li>User creates an account.</li>
+        <li>User logs in using username/email and password.</li>
+        <li>System generates OTP.</li>
+        <li>User verifies OTP.</li>
+        <li>Dashboard opens after successful verification.</li>
+    </ul>
+</div>
+
+<a href="/login">
+    <button style="margin-top:25px;">Enter Project</button>
+</a>
+
+{% endblock %}
