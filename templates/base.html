@@ -12,68 +12,113 @@
             min-height: 100vh;
             font-family: Arial, sans-serif;
             background: #020617;
-            overflow: hidden;
             color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            overflow: auto;
         }
 
-        .cyber-bg {
-            position: fixed;
-            inset: 0;
+        .desktop-bg {
+            min-height: 100vh;
+            padding: 35px;
             background:
-                radial-gradient(circle at 20% 20%, rgba(56,189,248,0.25), transparent 28%),
-                radial-gradient(circle at 80% 30%, rgba(124,58,237,0.25), transparent 28%),
-                radial-gradient(circle at 50% 80%, rgba(37,99,235,0.22), transparent 32%);
-            animation: bgMove 10s infinite alternate;
-            z-index: 0;
+                radial-gradient(circle at 20% 20%, rgba(56,189,248,0.22), transparent 30%),
+                radial-gradient(circle at 80% 20%, rgba(124,58,237,0.22), transparent 30%),
+                linear-gradient(135deg, #020617, #0f172a);
         }
 
-        @keyframes bgMove {
-            from { transform: scale(1); }
-            to { transform: scale(1.12); }
+        .desktop-window {
+            width: 95%;
+            max-width: 1150px;
+            min-height: 680px;
+            margin: auto;
+            border-radius: 22px;
+            overflow: hidden;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(56,189,248,0.35);
+            box-shadow: 0 0 45px rgba(56,189,248,0.25);
         }
 
-        .card {
-            position: relative;
-            z-index: 2;
-            width: 92%;
-            max-width: 540px;
-            background: rgba(15, 23, 42, 0.92);
-            border: 1px solid rgba(56,189,248,0.4);
-            border-radius: 34px;
-            padding: 40px 34px;
-            box-shadow: 0 0 35px rgba(56,189,248,0.18);
+        .window-bar {
+            height: 55px;
+            background: rgba(2, 6, 23, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 22px;
+            border-bottom: 1px solid rgba(56,189,248,0.25);
         }
 
-        .topbar {
-            position: relative;
-            text-align: center;
-            margin-bottom: 22px;
+        .dots {
+            display: flex;
+            gap: 9px;
         }
 
-        .secure-text {
-            color: #38bdf8;
-            letter-spacing: 5px;
-            font-size: 13px;
-            text-align: left;
+        .dot {
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+        }
+
+        .red { background: #ef4444; }
+        .yellow { background: #f59e0b; }
+        .green { background: #22c55e; }
+
+        .window-title {
+            color: #7dd3fc;
+            letter-spacing: 4px;
+            font-size: 14px;
+            font-weight: bold;
         }
 
         .clock {
-            color: #7dd3fc;
+            color: #cbd5e1;
             font-size: 13px;
-            text-align: center;
-            margin-top: 10px;
-            line-height: 1.4;
+            text-align: right;
+        }
+
+        .desktop-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 625px;
+        }
+
+        .sidebar {
+            background: rgba(2,6,23,0.65);
+            border-right: 1px solid rgba(56,189,248,0.2);
+            padding: 28px 22px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #38bdf8;
+            margin-bottom: 30px;
+        }
+
+        .menu-item {
+            padding: 14px;
+            margin-bottom: 12px;
+            border-radius: 14px;
+            background: rgba(56,189,248,0.08);
+            color: #cbd5e1;
+            border: 1px solid rgba(56,189,248,0.15);
+        }
+
+        .menu-item.active {
+            color: white;
+            background: linear-gradient(90deg, #2563eb, #7c3aed);
+        }
+
+        .main-content {
+            padding: 45px;
+            position: relative;
         }
 
         .info-icon {
             position: absolute;
-            top: 18px;
-            right: 18px;
-            width: 38px;
-            height: 38px;
+            top: 25px;
+            right: 25px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             border: 1px solid #38bdf8;
             color: #7dd3fc;
@@ -85,8 +130,7 @@
         }
 
         h2 {
-            text-align: center;
-            font-size: 44px;
+            font-size: 48px;
             margin: 10px 0 28px;
             background: linear-gradient(90deg, #60a5fa, #8b5cf6, #22d3ee);
             -webkit-background-clip: text;
@@ -94,6 +138,7 @@
         }
 
         form {
+            max-width: 520px;
             display: flex;
             flex-direction: column;
             gap: 16px;
@@ -126,9 +171,14 @@
             cursor: pointer;
         }
 
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(56,189,248,0.4);
+        }
+
         p {
-            text-align: center;
             color: #cbd5e1;
+            line-height: 1.7;
         }
 
         a {
@@ -138,8 +188,7 @@
         }
 
         .otp-box {
-            margin: 16px auto 24px;
-            max-width: 420px;
+            max-width: 430px;
             padding: 22px 12px;
             border-radius: 20px;
             border: 1px solid #38bdf8;
@@ -149,9 +198,11 @@
             font-weight: bold;
             color: #7dd3fc;
             letter-spacing: 5px;
+            margin-bottom: 20px;
         }
 
         .flash {
+            max-width: 520px;
             margin-bottom: 15px;
             padding: 12px;
             border-radius: 12px;
@@ -172,31 +223,22 @@
 
         .tips {
             display: none;
+            max-width: 520px;
             margin-top: 24px;
             padding: 16px;
             border-radius: 18px;
             background: rgba(2,6,23,0.55);
             border: 1px solid rgba(56,189,248,0.25);
-            animation: fadeTips 0.3s ease;
-        }
-
-        @keyframes fadeTips {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .tips h3 {
             margin: 0 0 10px;
             color: #7dd3fc;
-            font-size: 18px;
         }
 
         .tips ul {
-            margin: 0;
-            padding-left: 20px;
             color: #cbd5e1;
             line-height: 1.7;
-            font-size: 14px;
         }
 
         .info-popup {
@@ -211,7 +253,7 @@
 
         .info-popup-content {
             width: 90%;
-            max-width: 520px;
+            max-width: 560px;
             background: #0f172a;
             border: 1px solid #38bdf8;
             border-radius: 24px;
@@ -219,24 +261,18 @@
             color: #e2e8f0;
         }
 
-        .info-popup-content h3 {
-            color: #38bdf8;
-            text-align: center;
-            font-size: 26px;
-        }
-
-        .info-popup-content ul {
-            line-height: 1.8;
-        }
-
         @media (max-width: 768px) {
-            body {
-                overflow: auto;
-                padding: 20px 0;
+            .desktop-bg { padding: 15px; }
+
+            .desktop-layout {
+                grid-template-columns: 1fr;
             }
 
-            .card {
-                width: 94%;
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
                 padding: 28px 18px;
             }
 
@@ -244,93 +280,114 @@
                 font-size: 34px;
             }
 
-            .secure-text {
-                text-align: center;
+            .window-title {
                 font-size: 11px;
-                letter-spacing: 3px;
+                letter-spacing: 2px;
             }
 
             .clock {
-                font-size: 12px;
+                font-size: 11px;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="cyber-bg"></div>
+<div class="desktop-bg">
+    <div class="desktop-window">
 
-    <div class="card">
-        <div class="info-icon" onclick="openInfo()">i</div>
+        <div class="window-bar">
+            <div class="dots">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+            </div>
 
-        <div class="topbar">
-            <div class="secure-text">SECURE ACCESS</div>
+            <div class="window-title">2FA LOGIN SYSTEM</div>
+
             <div class="clock" id="liveClock">Loading...</div>
         </div>
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="flash {{ category }}">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+        <div class="desktop-layout">
+            <div class="sidebar">
+                <div class="logo">🔐 2FA</div>
 
-        {% block content %}{% endblock %}
+                <div class="menu-item active">Secure Access</div>
+                <div class="menu-item">OTP Verification</div>
+                <div class="menu-item">Password Hashing</div>
+                <div class="menu-item">SQLite Database</div>
+                <div class="menu-item">Cyber Security</div>
+            </div>
 
-        <div class="tips" id="securityTips">
-            <h3>🔐 Security Tips</h3>
-            <ul>
-                <li>Use a strong password with numbers and symbols.</li>
-                <li>Never share your OTP with anyone.</li>
-                <li>Logout after using a public device.</li>
-                <li>Use 2FA for better account protection.</li>
-            </ul>
+            <div class="main-content">
+                <div class="info-icon" onclick="openInfo()">i</div>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="flash {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                {% block content %}{% endblock %}
+
+                <div class="tips" id="securityTips">
+                    <h3>🔐 Security Tips</h3>
+                    <ul>
+                        <li>Use a strong password with numbers and symbols.</li>
+                        <li>Never share your OTP with anyone.</li>
+                        <li>Logout after using a public device.</li>
+                        <li>Use 2FA for better account protection.</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 
-    <div class="info-popup" id="infoPopup">
-        <div class="info-popup-content">
-            <h3>About This Project</h3>
-            <ul>
-                <li>Secure login system using Flask and SQLite.</li>
-                <li>Two-Factor Authentication using OTP.</li>
-                <li>Password hashing for better security.</li>
-                <li>OTP expiry timer and resend OTP feature.</li>
-                <li>Cyber security project for practical demonstration.</li>
-            </ul>
-            <button onclick="closeInfo()">Close</button>
-        </div>
+<div class="info-popup" id="infoPopup">
+    <div class="info-popup-content">
+        <h3>About This Project</h3>
+        <ul>
+            <li>Secure login system using Flask and SQLite.</li>
+            <li>Two-Factor Authentication using OTP.</li>
+            <li>Password hashing for better security.</li>
+            <li>OTP expiry timer and resend OTP feature.</li>
+            <li>Cyber security project for practical demonstration.</li>
+        </ul>
+        <button onclick="closeInfo()">Close</button>
     </div>
+</div>
 
-    <script>
-        function updateClock() {
-            const now = new Date();
-            document.getElementById("liveClock").innerHTML =
-                now.toLocaleTimeString() + "<br>" + now.toLocaleDateString();
-        }
+<script>
+    function updateClock() {
+        const now = new Date();
+        document.getElementById("liveClock").innerHTML =
+            now.toLocaleTimeString() + "<br>" + now.toLocaleDateString();
+    }
 
-        setInterval(updateClock, 1000);
-        updateClock();
+    setInterval(updateClock, 1000);
+    updateClock();
 
-        function openInfo() {
-            document.getElementById("infoPopup").style.display = "flex";
-        }
+    function openInfo() {
+        document.getElementById("infoPopup").style.display = "flex";
+    }
 
-        function closeInfo() {
-            document.getElementById("infoPopup").style.display = "none";
-        }
+    function closeInfo() {
+        document.getElementById("infoPopup").style.display = "none";
+    }
 
-        document.addEventListener("DOMContentLoaded", function () {
-            const passwordFields = document.querySelectorAll('input[type="password"]');
-            const tips = document.getElementById("securityTips");
+    document.addEventListener("DOMContentLoaded", function () {
+        const passwordFields = document.querySelectorAll('input[type="password"]');
+        const tips = document.getElementById("securityTips");
 
-            passwordFields.forEach(function(field) {
-                field.addEventListener("focus", function() {
-                    tips.style.display = "block";
-                });
+        passwordFields.forEach(function(field) {
+            field.addEventListener("focus", function() {
+                tips.style.display = "block";
             });
         });
-    </script>
+    });
+</script>
 </body>
 </html>
