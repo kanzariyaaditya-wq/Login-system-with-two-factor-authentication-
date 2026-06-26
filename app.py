@@ -20,7 +20,6 @@ def get_db():
 
 def create_tables():
     conn = get_db()
-
     conn.execute("""
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -30,7 +29,6 @@ def create_tables():
             password TEXT NOT NULL
         )
     """)
-
     conn.execute("""
         CREATE TABLE IF NOT EXISTS otps (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -41,7 +39,6 @@ def create_tables():
             FOREIGN KEY(user_id) REFERENCES users(id)
         )
     """)
-
     conn.commit()
     conn.close()
 
@@ -51,7 +48,7 @@ create_tables()
 
 @app.route("/")
 def home():
-    return redirect(url_for("login"))
+    return render_template("home.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -72,7 +69,6 @@ def register():
             )
             conn.commit()
             conn.close()
-
             flash("Registration successful. Please login.", "success")
             return redirect(url_for("login"))
 
