@@ -1,12 +1,62 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>User Registration</h2>
+<h2>Create Account</h2>
+
 <form method="POST">
-    <input type="text" name="name" placeholder="Enter full name" required>
-    <input type="email" name="email" placeholder="Enter email" required>
-    <input type="text" name="username" placeholder="Enter username" required>
-    <input type="password" name="password" placeholder="Enter password" required>
+    <input type="text" name="name" placeholder="Full Name" required>
+    <input type="email" name="email" placeholder="Email Address" required>
+    <input type="text" name="username" placeholder="Username" required>
+
+    <input type="password" name="password" id="password" placeholder="Password" required onkeyup="checkStrength()">
+
+    <div style="margin-top:-8px;">
+        <div style="height:8px; background:#0f172a; border-radius:20px; overflow:hidden; border:1px solid rgba(56,189,248,0.25);">
+            <div id="strengthBar" style="height:100%; width:0%; background:#ef4444; transition:0.3s;"></div>
+        </div>
+        <p id="strengthText" style="text-align:left; margin:8px 0 0; font-size:14px; color:#f87171;">
+            Password Strength: -
+        </p>
+    </div>
+
     <button type="submit">Register</button>
 </form>
-<p style="text-align:center;">Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+
+<p>Already have an account? <a href="/login">Login</a></p>
+
+<script>
+function checkStrength() {
+    const password = document.getElementById("password").value;
+    const bar = document.getElementById("strengthBar");
+    const text = document.getElementById("strengthText");
+
+    let score = 0;
+
+    if (password.length >= 6) score++;
+    if (password.length >= 10) score++;
+    if (/[A-Z]/.test(password)) score++;
+    if (/[0-9]/.test(password)) score++;
+    if (/[^A-Za-z0-9]/.test(password)) score++;
+
+    if (password.length === 0) {
+        bar.style.width = "0%";
+        text.innerHTML = "Password Strength: -";
+        text.style.color = "#f87171";
+    } else if (score <= 2) {
+        bar.style.width = "35%";
+        bar.style.background = "#ef4444";
+        text.innerHTML = "Password Strength: Weak";
+        text.style.color = "#f87171";
+    } else if (score <= 4) {
+        bar.style.width = "70%";
+        bar.style.background = "#f59e0b";
+        text.innerHTML = "Password Strength: Medium";
+        text.style.color = "#fbbf24";
+    } else {
+        bar.style.width = "100%";
+        bar.style.background = "#22c55e";
+        text.innerHTML = "Password Strength: Strong";
+        text.style.color = "#86efac";
+    }
+}
+</script>
 {% endblock %}
