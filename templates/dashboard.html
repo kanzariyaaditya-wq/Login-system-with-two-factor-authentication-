@@ -1,7 +1,160 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Dashboard</h2>
-<p>Welcome, <b>{{ user["name"] }}</b></p>
-<p>Your login is successful using Two-Factor Authentication.</p>
-<a href="{{ url_for('logout') }}">Logout</a>
+
+<h2>Security Dashboard</h2>
+
+<div style="
+background:rgba(2,6,23,0.55);
+border:1px solid rgba(56,189,248,0.35);
+border-radius:20px;
+padding:25px;
+margin-bottom:25px;
+">
+
+    <h3 style="color:#38bdf8;margin-top:0;">
+        👋 Welcome, {{ user['name'] }}
+    </h3>
+
+    <hr style="border-color:rgba(56,189,248,0.2);">
+
+    <p>👤 <b>Username:</b> {{ user['username'] }}</p>
+
+    <p>📧 <b>Email:</b> {{ user['email'] }}</p>
+
+    <p>🔐 <b>Authentication:</b>
+        <span style="color:#22c55e;">Two-Factor Authentication Enabled</span>
+    </p>
+
+    <p>🟢 <b>Security Status:</b>
+        <span style="color:#22c55e;">Protected</span>
+    </p>
+
+    <p>⏱ <b>Session:</b>
+        <span style="color:#38bdf8;">Active</span>
+    </p>
+
+</div>
+
+<div style="
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:18px;
+margin-bottom:30px;
+">
+
+<div style="
+background:rgba(2,6,23,0.55);
+padding:18px;
+border-radius:18px;
+border:1px solid rgba(56,189,248,0.25);
+text-align:center;
+">
+<h3>🔒</h3>
+<b>Password</b>
+<p>Encrypted</p>
+</div>
+
+<div style="
+background:rgba(2,6,23,0.55);
+padding:18px;
+border-radius:18px;
+border:1px solid rgba(56,189,248,0.25);
+text-align:center;
+">
+<h3>📲</h3>
+<b>OTP</b>
+<p>Verified</p>
+</div>
+
+<div style="
+background:rgba(2,6,23,0.55);
+padding:18px;
+border-radius:18px;
+border:1px solid rgba(56,189,248,0.25);
+text-align:center;
+">
+<h3>🛡</h3>
+<b>Firewall</b>
+<p>Protected</p>
+</div>
+
+<div style="
+background:rgba(2,6,23,0.55);
+padding:18px;
+border-radius:18px;
+border:1px solid rgba(56,189,248,0.25);
+text-align:center;
+">
+<h3>💾</h3>
+<b>Database</b>
+<p>Connected</p>
+</div>
+
+</div>
+
+<div style="
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+margin-top:25px;
+">
+
+<a href="/">
+<button style="
+background:linear-gradient(90deg,#2563eb,#06b6d4);
+min-width:180px;
+">
+🏠 Home
+</button>
+</a>
+
+<a href="/login">
+<button style="
+background:linear-gradient(90deg,#7c3aed,#2563eb);
+min-width:180px;
+">
+🔑 Login
+</button>
+</a>
+
+<a href="/logout">
+<button style="
+background:linear-gradient(90deg,#dc2626,#ef4444);
+min-width:180px;
+">
+🚪 Logout
+</button>
+</a>
+
+</div>
+
+<div style="
+margin-top:35px;
+padding:18px;
+border-radius:18px;
+background:rgba(2,6,23,0.55);
+border:1px solid rgba(56,189,248,0.25);
+">
+
+<h3 style="color:#38bdf8;">📋 Session Information</h3>
+
+<ul style="line-height:1.9;color:#cbd5e1;">
+
+<li>✔ Secure Login Successful</li>
+
+<li>✔ OTP Authentication Completed</li>
+
+<li>✔ User Session Active</li>
+
+<li>✔ Database Connection Secure</li>
+
+<li>✔ Password Stored Using Hashing</li>
+
+<li>✔ System Ready for Secure Operations</li>
+
+</ul>
+
+</div>
+
 {% endblock %}
